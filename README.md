@@ -5,11 +5,14 @@ Getestet mit Python in einer Virtual Environment mit Python Version 3.8.2 auf Ub
 
 ### Installieren der benötigten Packages
 ```script
+$ python setup.py build
+$ python setup.py install
 $ pip install -r requirements.txt
 ```
 ### Ausführen des Codes
 
 ```script
+$ cd solve_coding_challenge/
 $ python main.py -h
 usage: main.py [-h] [-l LOAD] [-i ITERATIONS] [-s SCORE]
 
