@@ -46,14 +46,14 @@ Zeitaufwand und der Minimierung der Gesamtdistanz darstellt.
 
 ### Geringste gefundende Distanz
 Die geringste gefundene Distanz in Kilometern beträgt:
- ```python
+ ```script
 Distanz: 2333.4124 km
  ```
 
 ### Reihenfolge der Standorte
 Die Reihenfolge mit Start- und Endpunkt in Ismaning ergibt sich folgendermaßen:
 
-```python
+```script
 Ismaning/München (Hauptsitz)
 Ingolstadt
 Nürnberg

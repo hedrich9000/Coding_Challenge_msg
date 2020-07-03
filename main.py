@@ -4,13 +4,14 @@ import argparse
 from utils.load_csv import loadcsv
 from utils.tsp import solvetsp
 
+
 def get_args():
-    '''
+    """
     Setup possible arguments for command line execution.
 
     :return:
     parser object
-    '''
+    """
     parser = argparse.ArgumentParser(description='Import CSV-File and get a solution for the TSP problem.\n'
                                                  'If nothing is set, the program will set the csv-path to '
                                                  '"msg_standorte_deutschland.csv" and the iterations to 5.',
@@ -24,34 +25,34 @@ def get_args():
 
     return parser.parse_args()
 
+
 def load_args():
-    '''
+    """
     Helper function to setup and interpret command line arguments for further algorithms.
     :return:
     path: str
     iter: int
     score: float
-    '''
+    """
     args = get_args()
 
     path = args.load
     iter = args.iterations
     score = args.score
 
-    if path == False:
+    if not path:
         path = "msg_standorte_deutschland.csv"
         logging.warning("Path set to {p}".format(p=path))
 
-    if iter == False:
+    if not iter:
         iter = 5
         logging.warning("Iterations set to {i}.".format(i=iter))
 
-    if score == False:
+    if not score:
         score = 0.00001
 
-
-
     return path, iter, score
+
 
 if __name__ == "__main__":
     # Set logging level according to your needs:

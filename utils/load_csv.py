@@ -2,37 +2,37 @@ import pandas as pd
 import logging
 from math import cos, sin, asin, radians, sqrt
 
+
 class loadcsv:
-    '''
+    """
     This class loads and interprets the csv-file with the format, which is stated in the task.
     Further, this class calculates the distances between the locations from the geocoordinates.
-    '''
+    """
     def __init__(self, path):
-        '''
+        """
         Setup the csv-interpreter.
         :param path: str
             Path to the csv-file
-        '''
+        """
         self.path = path
         self.loadeddata = pd.read_csv(self.path)
         logging.debug("\n" + str(self.loadeddata))
         self.distance_frame = None
 
-
     def _load_data(self):
-        '''
+        """
         Loads the csv-file into a pandas dataframe.
         :return:
-        '''
+        """
         self.loadeddata = pd.read_csv(self.path)
         logging.debug("\n" + str(self.loadeddata))
 
     def _calculate_distances(self):
-        '''
+        """
         Iterates through the dataframe entries (locations) and calculates the distance to each other location.
         Result is the distance matrix saved as self.distance_frame.
         :return:
-        '''
+        """
         dist_list_glob = []
         for i1, loc1 in self.loadeddata.iterrows():
             dist_list_loc = []
@@ -43,9 +43,9 @@ class loadcsv:
         self.distance_frame = pd.DataFrame(dist_list_glob)
 
     def _get_distance(self, loc1, loc2):
-        '''
-        This function calculates the distance between the two given locations in km. Here, the distance is calculated as the
-        circle distance via the geo coordinates of the locations.
+        """
+        This function calculates the distance between the two given locations in km. Here, the distance is calculated
+        as the circle distance via the geo coordinates of the locations.
         :param loc1: dict
             first location entry from dataframe
         :param loc2: dict
@@ -53,7 +53,7 @@ class loadcsv:
         :return:
         dist: float
             Distance between the two given locations in km
-        '''
+        """
         lon1, lat1, lon2, lat2 = map(radians, [loc1["Längengrad"], loc1["Breitengrad"], loc2["Längengrad"], loc2["Breitengrad"]])
 
         diff_lon = lon2 - lon1
@@ -63,7 +63,7 @@ class loadcsv:
         return dist
 
     def get_data(self):
-        '''
+        """
         This function executes the other internal functions and returns the internal dataframe objects which
         contain the location-infos and distances.
         :return:
@@ -71,7 +71,7 @@ class loadcsv:
             Dataframe containing the general info for each location
         distance_frame: dataframe,
             Dataframe containing the distance matrix for all locations
-        '''
+        """
         self._load_data()
         self._calculate_distances()
         return self.loadeddata, self.distance_frame

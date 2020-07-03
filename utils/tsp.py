@@ -2,16 +2,17 @@ import numpy as np
 import logging
 import random
 
+
 class solvetsp:
     def __init__(self, dist_frame):
-        '''
+        """
         This class solves the traveling salesman problem with the 2-opt algorithm. As input, the distance matrix must
         be given in a pandas dataframe.
         :param dist_frame: dataframe
             Dataframe containing the distance matrix for all locations
-        '''
+        """
         self.dist_frame = dist_frame
-        self.num = len(dist_frame) + 1 # Ismaning is at start and end of the list, so number of cities is +1 for double Ismaning
+        self.num = len(dist_frame) + 1  # Ismaning is at start and end of the list
         self.init = None
         self.set_init()
 
@@ -23,7 +24,7 @@ class solvetsp:
         self.iterated_sequences = []  # List of all calculated sequences over the iterations
 
     def solve_opt2(self, scorethresh, iterations=20):
-        '''
+        """
         This function executes the 2-opt algorithm for optimizing the route with the given distance matrix.
         Here, the iterations, which always start with a new random route, can be set. the scorethresh defines the
         threshold, where  the algorithm stops the optimizing process for each iteration. A common default value here is
@@ -33,7 +34,7 @@ class solvetsp:
         :param iterations: int
             Number of iteration with random initial route
         :return:
-        '''
+        """
         # Get Initial sequence and distance
         self.sequence = self.init
         self.dist, self.sequence_dist = self._get_fulldist(self.sequence)
@@ -47,11 +48,11 @@ class solvetsp:
                 dist_prev = self.dist
                 # Iterate over all parts of the sequence:
                 for start in range(1, self.num - 2):
-                    for stop in range(start + 1, self.num -1):
+                    for stop in range(start + 1, self.num - 1):
                         # Reorder parts of the sequence:
                         sequence_new = np.concatenate((self.sequence[0:start],
-                                                      self.sequence[stop:-len(self.sequence) + start -1:-1],
-                                                      self.sequence[stop + 1:len(self.sequence)])).tolist()
+                                                       self.sequence[stop:-len(self.sequence) + start - 1:-1],
+                                                       self.sequence[stop + 1:len(self.sequence)])).tolist()
                         # Calculate new total distance of the resulting sequence:
                         dist_new, sequence_new_dist = self._get_fulldist(sequence_new)
                         self.sequence_dists.append(dist_new)
@@ -78,25 +79,25 @@ class solvetsp:
         self.dist = np.min(self.iterated_dists)
         try:
             ind = np.where(self.iterated_dists == self.dist)[0][0]
-        except:
+        except ValueError:
             ind = np.where(self.iterated_dists == self.dist)[0]
         self.sequence = self.iterated_sequences[ind]
 
         logging.info("Best result: Distance: {d} from Iteration {i}".format(i=ind, d=self.dist))
 
     def set_init(self, rand=True, init_list=None):
-        '''
+        """
         This function sets the initial route to a given order (init_list) or randomly. If nothing is set, the order will
         be set to random.
         :param rand: bool
         :param init_list: list [int]
         :return:
-        '''
+        """
         if rand or init_list is None:
             # Create random list of numbers between 1 and number of cities minus one:
             init_list = list(range(1, self.num - 1))
             random.shuffle(init_list)
-        elif not init_list is None and len(init_list) == self.num:
+        elif init_list is not None and len(init_list) == self.num:
             pass
         else:
             raise ValueError("init_list not set or does not have a length according to the given dist_frame")
@@ -106,9 +107,8 @@ class solvetsp:
 
         self.init = init_list
 
-
     def _get_fulldist(self, sequence):
-        '''
+        """
         Internal function to calculate the distances over the given sequence. Returns single distance as well as total
         distance.
         :param sequence: list [int]
@@ -118,16 +118,15 @@ class solvetsp:
             Total distance for the given sequence
         sequence_dist: list [float]
             List of all single distances for the given sequence
-        '''
+        """
         sequence_dist = []
-        for i in range(len(sequence)-1):
-            sequence_dist.append(self.dist_frame[sequence[i]][sequence[i+1]])
+        for i in range(len(sequence) - 1):
+            sequence_dist.append(self.dist_frame[sequence[i]][sequence[i + 1]])
         fulldist = sum(sequence_dist)
         return fulldist, sequence_dist
 
-
     def get_result(self):
-        '''
+        """
         This function returns the internal objects containing the resulting sequence (in numbers from 0-20) and total
         distance for the respective sequence.
         :return:
@@ -135,5 +134,5 @@ class solvetsp:
             List of the locations in calculated order
         dist: float
             Total distance for the given sequence
-        '''
+        """
         return self.sequence, self.dist
