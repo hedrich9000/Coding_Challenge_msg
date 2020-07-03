@@ -54,7 +54,10 @@ class loadcsv:
         dist: float
             Distance between the two given locations in km
         """
-        lon1, lat1, lon2, lat2 = map(radians, [loc1["Längengrad"], loc1["Breitengrad"], loc2["Längengrad"], loc2["Breitengrad"]])
+        lon1, lat1, lon2, lat2 = map(radians, [loc1["Längengrad"],
+                                               loc1["Breitengrad"],
+                                               loc2["Längengrad"],
+                                               loc2["Breitengrad"]])
 
         diff_lon = lon2 - lon1
         diff_lat = lat2 - lat1
