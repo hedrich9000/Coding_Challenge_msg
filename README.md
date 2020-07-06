@@ -9,8 +9,13 @@ $ python setup.py build
 $ python setup.py install
 $ pip install -r requirements.txt
 ```
-### Ausführen des Codes
-
+### Ausführen des Codes (Beispiel)
+Ausführen des Beispiels mit beigefügter .csv-Datei:
+```script
+$ cd solve_coding_challenge/
+$ python main.py -v
+```
+### Ausführen des Codes (Ausführlich)
 ```script
 $ cd solve_coding_challenge/
 $ python main.py -h
@@ -29,11 +34,11 @@ optional arguments:
   -s SCORE, --score SCORE
                         [OPTIONAL] Set score, where the algorithms ends the
                         optimization. (default: False)
-
+  -v, --visualize       [OPTIONAL] Enable visualization of the cities on a map using your webbrowser. (default: False)
 ```
-### Beispiel
+Beispielanwendung in der Kommandozeile:
 ```script
-$ python main.py -l /pathtofile/file.csv -i 20
+$ python main.py -l /path/to/file/file.csv -i 20 -s 0.001 -v
 ```
 
 ## Berechnung der Distanzen
@@ -81,7 +86,7 @@ Chemnitz
 Passau
 Ismaning/München (Hauptsitz)
 ```
-### Karte
+### Ergebnisse auf der Karte
 ![Map showing the resulting route to cities](solve_coding_challenge/docs/result_map.png) |
 :----:|
-[Link to Interactive Map](https://htmlpreview.github.io/?https://github.com/hedrich9000/Coding_Challenge_msg/blob/osm_implementation/solve_coding_challenge/docs/map.html)|
+[Link to HTML-file containing an interactive Map](solve_coding_challenge/docs/map.html)|

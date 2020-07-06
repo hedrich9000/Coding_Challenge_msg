@@ -1,5 +1,11 @@
-from ipyleaflet import Map, Marker, MarkerCluster, Polyline
-import webbrowser
+import logging
+
+try:
+    from ipyleaflet import Map, Marker, MarkerCluster, Polyline
+    import webbrowser
+except ImportError:
+    logging.error("Import of ipyleaflet or webbrowser failed.")
+
 
 class visualize:
     def __init__(self, dataframe):
@@ -7,9 +13,7 @@ class visualize:
         This class visualizes the resulting sequence of cities on a open source map.
 
         :param dataframe: dataframe
-
         """
-
         self.dataframe = dataframe
         self.sequence = None
 
