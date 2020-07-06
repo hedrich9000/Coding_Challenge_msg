@@ -3,7 +3,7 @@ import argparse
 
 from utils.load_csv import loadcsv
 from utils.tsp import solvetsp
-
+from utils.visualization import visualize
 
 def get_args():
     """
@@ -19,9 +19,11 @@ def get_args():
     parser.add_argument('-l', '--load', dest='load', type=str, default=False,
                         help='Load CSV-File in the stated form')
     parser.add_argument('-i', '--iterations', dest='iterations', type=int, default=False,
-                        help='Set the wanted iterations with random initial routes for the algorithm')
+                        help='[OPTIONAL] Set the wanted iterations with random initial routes for the algorithm')
     parser.add_argument('-s', '--score', dest='score', type=float, default=False,
                         help='[OPTIONAL] Set score, where the algorithms ends the optimization.')
+    parser.add_argument('-v', '--visualize', dest='visualize', default=False, action="store_true",
+                        help='[OPTIONAL] Enable visualization of the cities on a map using your webbrowser.')
 
     return parser.parse_args()
 
@@ -39,6 +41,7 @@ def load_args():
     path = args.load
     iter = args.iterations
     score = args.score
+    vis = args.visualize
 
     if not path:
         path = "msg_standorte_deutschland.csv"
@@ -51,7 +54,7 @@ def load_args():
     if not score:
         score = 0.00001
 
-    return path, iter, score
+    return path, iter, score, vis
 
 
 if __name__ == "__main__":
@@ -59,7 +62,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.WARNING)
 
     # Setup Argumentparser:
-    path, iter, score = load_args()
+    path, iter, score, vis = load_args()
 
     # Load file:
     csvloader = loadcsv(path)
@@ -79,3 +82,10 @@ if __name__ == "__main__":
     for s in sequence:
         output = output + "{c}\n".format(c=data_frame["msg Standort"][s])
     print(output)
+
+    if vis:
+        logging.debug("Visualizing the cities on a map as html in the default webbrowser")
+        vis = visualize(data_frame)
+        vis.visualize_sequence_on_map(sequence)
+
+

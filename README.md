@@ -35,6 +35,7 @@ optional arguments:
 ```script
 $ python main.py -l /pathtofile/file.csv -i 20
 ```
+
 ## Berechnung der Distanzen
 Die Distanz zwischen den Städten wurde mittels der Geokoordinaten als Kreisbogen über 
 die Erdkugel berechnet. Somit entspricht die Distanz der "Luftlinie" zwischen den Orten.
@@ -80,3 +81,7 @@ Chemnitz
 Passau
 Ismaning/München (Hauptsitz)
 ```
+### Karte
+![Map showing the resulting route to cities](solve_coding_challenge/docs/result_map.png) |
+:----:|
+[Link to Interactive Map](solve_coding_challenge/docs/map.html)|
