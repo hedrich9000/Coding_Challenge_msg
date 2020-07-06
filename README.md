@@ -84,4 +84,4 @@ Ismaning/München (Hauptsitz)
 ### Karte
 ![Map showing the resulting route to cities](solve_coding_challenge/docs/result_map.png) |
 :----:|
-[Link to Interactive Map](solve_coding_challenge/docs/map.html)|
+[Link to Interactive Map](https://htmlpreview.github.io/?https://github.com/hedrich9000/Coding_Challenge_msg/blob/osm_implementation/solve_coding_challenge/docs/map.html)|
