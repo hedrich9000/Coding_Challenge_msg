@@ -1,7 +1,11 @@
 # .msg Coding Challenge
 
 ## Ausführung des Codes
-Getestet mit Python in einer Virtual Environment mit Python Version 3.8.2 auf Ubuntu 20.04 LTS.
+Getestet mit Python in einer Virtual Environment mit:
+* Python Version 3.8.2 auf Ubuntu 20.04 LTS
+* Python Version 3.8.2 auf Windows 10 (10.0.18363)
+
+Zur Visualisierung des Ergebnis ist Firefox empfehlenswert (als Default Browser einstellen!).
 
 ### Installieren der benötigten Packages
 ```script
@@ -9,7 +13,7 @@ $ python setup.py build
 $ python setup.py install
 $ pip install -r requirements.txt
 ```
-### Ausführen des Codes (Beispiel)
+### Ausführen des Codes (kurzes Beispiel)
 Ausführen des Beispiels mit beigefügter .csv-Datei:
 ```script
 $ cd solve_coding_challenge/
@@ -19,7 +23,7 @@ $ python main.py -v
 ```script
 $ cd solve_coding_challenge/
 $ python main.py -h
-usage: main.py [-h] [-l LOAD] [-i ITERATIONS] [-s SCORE]
+usage: main.py [-h] [-l LOAD] [-i ITERATIONS] [-s SCORE] [-v]
 
 Import CSV-File and get a solution for the TSP problem. If nothing is set, the
 program will set the csv-path to "msg_standorte_deutschland.csv" and the
@@ -53,7 +57,7 @@ Zeitaufwand und der Minimierung der Gesamtdistanz darstellt.
 
 ## Lösung/Ergebnisse
 
-### Geringste gefundende Distanz
+### Geringste gefundene Distanz
 Die geringste gefundene Distanz in Kilometern beträgt:
  ```script
 Distanz: 2333.4124 km

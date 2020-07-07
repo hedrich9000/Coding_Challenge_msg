@@ -1,4 +1,5 @@
 import logging
+import os
 
 try:
     from ipyleaflet import Map, Marker, MarkerCluster, Polyline
@@ -16,6 +17,7 @@ class visualize:
         """
         self.dataframe = dataframe
         self.sequence = None
+        print("Visualization selected.")
 
     def visualize_sequence_on_map(self, sequence):
         """
@@ -44,8 +46,14 @@ class visualize:
         m.layout.height = '100vh'
         # Save file and show in webbrowser:
         fname = "utils/tmp/map.html"
+        realpath = os.path.realpath(fname)
         m.save(fname)
-        webbrowser.open_new_tab(fname)
+        # webbrowser.open_new_tab(fname)
+        webbrowser.open_new_tab("file://" + realpath)
+
+        print("...Opening interactive map in browser. If browser does not show the map correctly, try opening the "
+              "saved HTML-file ({n}) manually.".format(n=realpath))
+
 
 
     def _create_markers(self, sequence):

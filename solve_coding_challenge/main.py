@@ -45,11 +45,11 @@ def load_args():
 
     if not path:
         path = "msg_standorte_deutschland.csv"
-        logging.warning("Path set to {p}".format(p=path))
+        logging.warning("Path set to {p} by default".format(p=path))
 
     if not iter:
         iter = 5
-        logging.warning("Iterations set to {i}.".format(i=iter))
+        logging.warning("Iterations set to {i} by default".format(i=iter))
 
     if not score:
         score = 0.00001
@@ -75,12 +75,13 @@ if __name__ == "__main__":
     sequence, dist = tspsolver.get_result()
 
     # Print output:-----------------------------------------------
-    output = "######################################\n" \
+    output = "\n### Result ######################################################\n" \
              "Solved problem with following Results: \n" \
-             "Total Distance in kilometer: {d}\n\n" \
-             "Best found order of cities: \n".format(d=dist)
+             "-- Total Distance in kilometer: {d}\n\n" \
+             "-- Best found order of cities: \n".format(d=dist)
     for s in sequence:
-        output = output + "{c}\n".format(c=data_frame["msg Standort"][s])
+        output = output + "       {c}\n".format(c=data_frame["msg Standort"][s])
+    output = output + "#################################################################\n"
     print(output)
 
     if vis:
