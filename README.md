@@ -1,5 +1,9 @@
 # .msg Coding Challenge
 
+![Graph](solve_coding_challenge/docs/graph.gif) |
+:----:
+Graph showing the algorithm steps for the best solution |
+
 ## Ausführung des Codes
 Getestet mit Python in einer Virtual Environment mit:
 * Python Version 3.8.2 auf Ubuntu 20.04 LTS
@@ -92,5 +96,7 @@ Ismaning/München (Hauptsitz)
 ```
 ### Ergebnisse auf der Karte
 ![Map showing the resulting route to cities](solve_coding_challenge/docs/result_map.png) |
-:----:|
-[Link to HTML-file containing an interactive Map](solve_coding_challenge/docs/map.html)|
+:----:
+[Link to HTML-file containing an interactive Map](solve_coding_challenge/docs/map.html) |
+
+

@@ -3,7 +3,7 @@ import argparse
 
 from utils.load_csv import loadcsv
 from utils.tsp import solvetsp
-from utils.visualization import visualize
+from utils.visualization import visualize_map, visualize_graph
 
 def get_args():
     """
@@ -22,9 +22,10 @@ def get_args():
                         help='[OPTIONAL] Set the wanted iterations with random initial routes for the algorithm')
     parser.add_argument('-s', '--score', dest='score', type=float, default=False,
                         help='[OPTIONAL] Set score, where the algorithms ends the optimization.')
-    parser.add_argument('-v', '--visualize', dest='visualize', default=False, action="store_true",
+    parser.add_argument('-m', '--vis_map', dest='vis_map', default=False, action="store_true",
                         help='[OPTIONAL] Enable visualization of the cities on a map using your webbrowser.')
-
+    parser.add_argument('-g', '--vis_graph', dest='vis_graph', default=False, action="store_true",
+                        help='[OPTIONAL] Enable visualization of the algorithm steps as a graph using your webbrowser.')
     return parser.parse_args()
 
 
@@ -39,22 +40,23 @@ def load_args():
     args = get_args()
 
     path = args.load
-    iter = args.iterations
+    iterate = args.iterations
     score = args.score
-    vis = args.visualize
+    vis_map = args.vis_map
+    vis_graph = args.vis_graph
 
     if not path:
         path = "msg_standorte_deutschland.csv"
         logging.warning("Path set to {p} by default".format(p=path))
 
-    if not iter:
-        iter = 5
-        logging.warning("Iterations set to {i} by default".format(i=iter))
+    if not iterate:
+        iterate = 10
+        logging.warning("Iterations set to {i} by default".format(i=iterate))
 
     if not score:
         score = 0.00001
 
-    return path, iter, score, vis
+    return path, iterate, score, vis_map, vis_graph
 
 
 if __name__ == "__main__":
@@ -62,7 +64,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.WARNING)
 
     # Setup Argumentparser:
-    path, iter, score, vis = load_args()
+    path, iter, score, vis_map, vis_graph = load_args()
 
     # Load file:
     csvloader = loadcsv(path)
@@ -84,9 +86,13 @@ if __name__ == "__main__":
     output = output + "#################################################################\n"
     print(output)
 
-    if vis:
+    if vis_map:
         logging.debug("Visualizing the cities on a map as html in the default webbrowser")
-        vis = visualize(data_frame)
-        vis.visualize_sequence_on_map(sequence)
+        map = visualize_map(data_frame)
+        map.visualize_sequence_on_map(sequence)
 
+    if vis_graph:
+        logging.debug("Visualizing the cities on a map as html in the default webbrowser")
+        graph = visualize_graph(tspsolver, data_frame)
+        graph.visualize_sequences_in_graph()
 

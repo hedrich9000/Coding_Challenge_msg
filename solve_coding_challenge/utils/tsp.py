@@ -22,6 +22,8 @@ class solvetsp:
         self.dist = 0  # Total distance of the most recent sequence
         self.iterated_dists = []  # List of all calculated total distances over the iterations
         self.iterated_sequences = []  # List of all calculated sequences over the iterations
+        self.best_iterated_sequences = []
+        self.best_iterated_dist = []
 
     def solve_opt2(self, scorethresh, iterations=20):
         """
@@ -41,9 +43,13 @@ class solvetsp:
         logging.debug("Initial distance set: {d}".format(d=self.dist))
         logging.debug("Initial sequence set: {s}".format(s=self.sequence))
 
+        all_sequences = []
+        all_dists = []
         # Iterate over the number of iterations:
         for it in range(iterations):
             score = 1
+            iteration_sequences = []
+            iteration_dists = []
             while score > scorethresh:
                 dist_prev = self.dist
                 # Iterate over all parts of the sequence:
@@ -56,6 +62,8 @@ class solvetsp:
                         # Calculate new total distance of the resulting sequence:
                         dist_new, sequence_new_dist = self._get_fulldist(sequence_new)
                         self.sequence_dists.append(dist_new)
+                        iteration_sequences.append(sequence_new)
+                        iteration_dists.append(dist_new)
                         # Check if new total distance is smaller than recent total distance and save new best sequence
                         # and total distance (if not do nothing):
                         if dist_new < self.dist:
@@ -64,8 +72,9 @@ class solvetsp:
                             logging.debug("New best distance set: {d}".format(d=dist_new))
 
                 score = 1 - self.dist / dist_prev
-
             # Save best distance and sequence from this iteration:
+            all_sequences.append(iteration_sequences)
+            all_dists.append(iteration_dists)
             self.iterated_dists.append(self.dist)
             self.iterated_sequences.append(self.sequence)
             logging.info("Score of Iteration {i}: {s}, Distance: {d}".format(i=it, s=score, d=self.dist))
@@ -82,7 +91,8 @@ class solvetsp:
         except ValueError:
             ind = np.where(self.iterated_dists == self.dist)[0]
         self.sequence = self.iterated_sequences[ind]
-
+        self.best_iterated_sequences = all_sequences[ind]
+        self.best_iterated_dist = all_dists[ind]
         logging.info("Best result: Distance: {d} from Iteration {i}".format(i=ind, d=self.dist))
 
     def set_init(self, rand=True, init_list=None):
@@ -136,3 +146,6 @@ class solvetsp:
             Total distance for the given sequence
         """
         return self.sequence, self.dist
+
+    def get_best_sequences(self):
+        return self.best_iterated_dist, self.best_iterated_sequences
