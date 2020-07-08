@@ -21,13 +21,13 @@ $ pip install -r requirements.txt
 Ausführen des Beispiels mit beigefügter .csv-Datei:
 ```script
 $ cd solve_coding_challenge/
-$ python main.py -v
+$ python main.py -m -g
 ```
 ### Ausführen des Codes (Ausführlich)
 ```script
 $ cd solve_coding_challenge/
 $ python main.py -h
-usage: main.py [-h] [-l LOAD] [-i ITERATIONS] [-s SCORE] [-v]
+usage: main.py [-h] [-l LOAD] [-i ITERATIONS] [-s SCORE] [-m] [-g]
 
 Import CSV-File and get a solution for the TSP problem. If nothing is set, the
 program will set the csv-path to "msg_standorte_deutschland.csv" and the
@@ -37,16 +37,15 @@ optional arguments:
   -h, --help            show this help message and exit
   -l LOAD, --load LOAD  Load CSV-File in the stated form (default: False)
   -i ITERATIONS, --iterations ITERATIONS
-                        Set the wanted iterations with random initial routes
-                        for the algorithm (default: False)
+                        [OPTIONAL] Set the wanted iterations with random initial routes for the algorithm (default: False)
   -s SCORE, --score SCORE
-                        [OPTIONAL] Set score, where the algorithms ends the
-                        optimization. (default: False)
-  -v, --visualize       [OPTIONAL] Enable visualization of the cities on a map using your webbrowser. (default: False)
+                        [OPTIONAL] Set score, where the algorithms ends the optimization. (default: False)
+  -m, --vis_map         [OPTIONAL] Enable visualization of the cities on a map using your webbrowser. (default: False)
+  -g, --vis_graph       [OPTIONAL] Enable visualization of the algorithm steps as a graph using your webbrowser. (default: False)
 ```
 Beispielanwendung in der Kommandozeile:
 ```script
-$ python main.py -l /path/to/file/file.csv -i 20 -s 0.001 -v
+$ python main.py -l /path/to/file/file.csv -i 20 -s 0.001 -m -g
 ```
 
 ## Berechnung der Distanzen
