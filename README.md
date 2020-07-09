@@ -96,6 +96,6 @@ Ismaning/München (Hauptsitz)
 ### Ergebnisse auf der Karte
 ![Map showing the resulting route to cities](solve_coding_challenge/docs/result_map.png) |
 :----:
-[Link to HTML-file containing an interactive Map](solve_coding_challenge/docs/map.html) |
+Die gezeigte Karte kann mittels dieser Datei ([Link](solve_coding_challenge/docs/map.html)) im Browser angezeigt werden. Zur korrekten Darstellung sollte die Datei zuvor runtergeladen und mit dem Browser geöffnet werden. |
 
 
