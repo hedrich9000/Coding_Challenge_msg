@@ -92,7 +92,7 @@ if __name__ == "__main__":
         map.visualize_sequence_on_map(sequence)
 
     if vis_graph:
-        logging.debug("Visualizing the cities on a map as html in the default webbrowser")
+        logging.debug("Visualizing the graph showing all sequences of the best iteration as html in the default webbrowser")
         graph = visualize_graph(tspsolver, data_frame)
         graph.visualize_sequences_in_graph()
 

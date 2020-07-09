@@ -22,6 +22,8 @@ class visualize_graph:
 
         self.fig = None
 
+        print("Graph Visualization selected.")
+
     def visualize_sequences_in_graph(self):
         locationmode = 'USA-states'
 
@@ -45,6 +47,9 @@ class visualize_graph:
         fname = "utils/tmp/graph.html"
         realpath = os.path.realpath(fname)
         self.fig.write_html(realpath)
+
+        print("...Opening interactive graph in browser. If browser does not show the map correctly, try opening the "
+              "saved HTML-file ({n}) manually.".format(n=realpath))
 
 
     def _setup_frames(self, color_countries, color_lines):
@@ -181,7 +186,7 @@ class visualize_map:
         """
         self.dataframe = dataframe
         self.sequence = None
-        print("Visualization selected.")
+        print("Streetmap Visualization selected.")
 
     def visualize_sequence_on_map(self, sequence):
         """
@@ -215,8 +220,8 @@ class visualize_map:
         # webbrowser.open_new_tab(fname)
         webbrowser.open_new_tab("file://" + realpath)
 
-        print("...Opening interactive map in browser. If browser does not show the map correctly, try opening the "
-              "saved HTML-file ({n}) manually.".format(n=realpath))
+        print("...Opening interactive streetmap in browser. If browser does not show the map correctly, try opening "
+              "the saved HTML-file ({n}) manually.".format(n=realpath))
 
 
 
