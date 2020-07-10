@@ -1,6 +1,9 @@
+from typing import Tuple, ClassVar, List
 import logging
 import os
 import numpy as np
+import pandas as pd
+
 
 try:
     from ipyleaflet import Map, Marker, MarkerCluster, Polyline
@@ -15,7 +18,15 @@ except ImportError:
 
 
 class visualize_graph:
-    def __init__(self, tspsolver, dataframe):
+    def __init__(self,
+                 tspsolver: ClassVar,
+                 dataframe: pd.DataFrame):
+        """
+        This class visualizes the algorithm steps using the plotly library.
+
+        :param tspsolver: class from utils.tsp to gather the needed data
+        :param dataframe: Dataframe which contains the city information
+        """
         self.dataframe = dataframe
         self.best_sequence, self.best_dist = tspsolver.get_result()
         self.all_dists, self.all_sequences = tspsolver.get_best_sequences()
@@ -25,6 +36,10 @@ class visualize_graph:
         print("Graph Visualization selected.")
 
     def visualize_sequences_in_graph(self):
+        """
+        This function starts the visualization of the algorithm steps.
+        :return:
+        """
         locationmode = 'USA-states'
 
         # Colors:
@@ -32,7 +47,6 @@ class visualize_graph:
         color_germany = 'rgb(156,39,66)'
         color_countries = 100
         color_lines = 'rgb(30,30,30)'
-
 
         # Build figure from all sequences from the best iteration step:
         frames, lon_vals, lat_vals = self._setup_frames(color_countries, color_lines)
@@ -51,8 +65,9 @@ class visualize_graph:
         print("...Opening interactive graph in browser. If browser does not show the map correctly, try opening the "
               "saved HTML-file ({n}) manually.".format(n=realpath))
 
-
-    def _setup_frames(self, color_countries, color_lines):
+    def _setup_frames(self,
+                      color_countries: int,
+                      color_lines: str) -> Tuple[List[go.Frame], list, list]:
         # Create frames for visualization: ----------------------------------------
         frames = list()
         self.all_sequences.append(self.best_sequence)
@@ -90,7 +105,10 @@ class visualize_graph:
 
         return frames, lon_vals, lat_vals
 
-    def _setup_figure(self, frames, lon_vals, lat_vals, color_germany):
+    def _setup_figure(self, frames: List[go.Frame],
+                      lon_vals: list,
+                      lat_vals: list,
+                      color_germany: str):
         # Set up plotly Figure: -----------------------------------------------------
         self.fig = go.Figure(
             data=[
@@ -128,7 +146,9 @@ class visualize_graph:
 
         return self.fig
 
-    def _setup_cities(self, locationmode, color_cities):
+    def _setup_cities(self,
+                      locationmode: str,
+                      color_cities: str):
         # Adding Cities:------------------------------------
         self.fig.add_trace(go.Scattergeo(
             locationmode=locationmode,
@@ -154,7 +174,8 @@ class visualize_graph:
             ))
         )
 
-    def _setup_layout(self, color_countries):
+    def _setup_layout(self,
+                      color_countries: int):
         # Updating Figure Layout: ---------------------------------------------------------
         self.fig.update_layout(
             title_text='[PRESS PLAY] .msg Coding Challenge: \n'
@@ -178,7 +199,8 @@ class visualize_graph:
 
 
 class visualize_map:
-    def __init__(self, dataframe):
+    def __init__(self,
+                 dataframe: pd.DataFrame):
         """
         This class visualizes the resulting sequence of cities on a open source map.
 
@@ -188,7 +210,8 @@ class visualize_map:
         self.sequence = None
         print("Streetmap Visualization selected.")
 
-    def visualize_sequence_on_map(self, sequence):
+    def visualize_sequence_on_map(self,
+                                  sequence: list):
         """
         Visualizes the resulting sequence of cities on a open source map.
         :param sequence: list [int]
@@ -225,7 +248,8 @@ class visualize_map:
 
 
 
-    def _create_markers(self, sequence):
+    def _create_markers(self,
+                        sequence: list) -> List[Marker]:
         """
         Creates markers in the needed structure/object.
         :param sequence: list [int]

@@ -1,13 +1,17 @@
+from typing import Tuple, Optional
 import numpy as np
+import pandas as pd
 import logging
 import random
 
 
 class solvetsp:
-    def __init__(self, dist_frame):
+    def __init__(self,
+                 dist_frame: pd.DataFrame):
         """
         This class solves the traveling salesman problem with the 2-opt algorithm. As input, the distance matrix must
         be given in a pandas dataframe.
+
         :param dist_frame: dataframe
             Dataframe containing the distance matrix for all locations
         """
@@ -22,15 +26,18 @@ class solvetsp:
         self.dist = 0  # Total distance of the most recent sequence
         self.iterated_dists = []  # List of all calculated total distances over the iterations
         self.iterated_sequences = []  # List of all calculated sequences over the iterations
-        self.best_iterated_sequences = []
-        self.best_iterated_dist = []
+        self.best_iterated_sequences = []  # List of all sequences from the iteration with the best final result
+        self.best_iterated_dist = []  # List of all total distances from the iteration with the best final result
 
-    def solve_opt2(self, scorethresh, iterations=20):
+    def solve_opt2(self,
+                   scorethresh: int = 0.001,
+                   iterations: int = 20):
         """
         This function executes the 2-opt algorithm for optimizing the route with the given distance matrix.
         Here, the iterations, which always start with a new random route, can be set. the scorethresh defines the
         threshold, where  the algorithm stops the optimizing process for each iteration. A common default value here is
         0.0001. A score of 0 describes no opimization between two steps in the algorithm.
+
         :param scorethresh: float
             Lower threshold for the score of each iteration
         :param iterations: int
@@ -39,7 +46,7 @@ class solvetsp:
         """
         # Get Initial sequence and distance
         self.sequence = self.init
-        self.dist, self.sequence_dist = self._get_fulldist(self.sequence)
+        self.dist, sequence_dist = self._get_fulldist(self.sequence)
         logging.debug("Initial distance set: {d}".format(d=self.dist))
         logging.debug("Initial sequence set: {s}".format(s=self.sequence))
 
@@ -82,20 +89,22 @@ class solvetsp:
             # Start over with new initial sequence:
             self.set_init(rand=True)
             self.sequence = self.init
-            self.dist, self.sequence_dist = self._get_fulldist(self.sequence)
+            self.dist, sequence_dist = self._get_fulldist(self.sequence)
 
         # Get best total distance and sequence:
-        self.dist = np.min(self.iterated_dists)
+        self.dist = np.min(self.iterated_dists)  # Storing total distance of best iteration
         try:
             ind = np.where(self.iterated_dists == self.dist)[0][0]
         except ValueError:
             ind = np.where(self.iterated_dists == self.dist)[0]
-        self.sequence = self.iterated_sequences[ind]
-        self.best_iterated_sequences = all_sequences[ind]
-        self.best_iterated_dist = all_dists[ind]
+        self.sequence = self.iterated_sequences[ind]  # Storing sequence from best iteration
+        self.best_iterated_sequences = all_sequences[ind] # Storing all sequences from best iteration
+        self.best_iterated_dist = all_dists[ind]  # Storing all total distances from best iteration
         logging.info("Best result: Distance: {d} from Iteration {i}".format(i=ind, d=self.dist))
 
-    def set_init(self, rand=True, init_list=None):
+    def set_init(self,
+                 rand: Optional[bool] = True,
+                 init_list: Optional[list] = None):
         """
         This function sets the initial route to a given order (init_list) or randomly. If nothing is set, the order will
         be set to random.
@@ -117,7 +126,8 @@ class solvetsp:
 
         self.init = init_list
 
-    def _get_fulldist(self, sequence):
+    def _get_fulldist(self,
+                      sequence: list) -> Tuple[float, list]:
         """
         Internal function to calculate the distances over the given sequence. Returns single distance as well as total
         distance.
@@ -135,7 +145,7 @@ class solvetsp:
         fulldist = sum(sequence_dist)
         return fulldist, sequence_dist
 
-    def get_result(self):
+    def get_result(self) -> Tuple[list, int]:
         """
         This function returns the internal objects containing the resulting sequence (in numbers from 0-20) and total
         distance for the respective sequence.
@@ -147,5 +157,5 @@ class solvetsp:
         """
         return self.sequence, self.dist
 
-    def get_best_sequences(self):
+    def get_best_sequences(self) -> Tuple[list, list]:
         return self.best_iterated_dist, self.best_iterated_sequences

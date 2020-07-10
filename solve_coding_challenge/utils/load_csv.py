@@ -1,3 +1,4 @@
+from typing import Tuple
 import pandas as pd
 import logging
 from math import cos, sin, asin, radians, sqrt
@@ -8,7 +9,8 @@ class loadcsv:
     This class loads and interprets the csv-file with the format, which is stated in the task.
     Further, this class calculates the distances between the locations from the geocoordinates.
     """
-    def __init__(self, path):
+    def __init__(self,
+                 path: str):
         """
         Setup the csv-interpreter.
         :param path: str
@@ -42,7 +44,9 @@ class loadcsv:
 
         self.distance_frame = pd.DataFrame(dist_list_glob)
 
-    def _get_distance(self, loc1, loc2):
+    def _get_distance(self,
+                      loc1: dict,
+                      loc2: dict) -> float:
         """
         This function calculates the distance between the two given locations in km. Here, the distance is calculated
         as the circle distance via the geo coordinates of the locations.
@@ -62,10 +66,10 @@ class loadcsv:
         diff_lon = lon2 - lon1
         diff_lat = lat2 - lat1
 
-        dist = 6371 * 2 * asin(sqrt(sin(diff_lat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(diff_lon / 2) ** 2))
+        dist = 6371.0 * 2 * asin(sqrt(sin(diff_lat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(diff_lon / 2) ** 2))
         return dist
 
-    def get_data(self):
+    def get_data(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """
         This function executes the other internal functions and returns the internal dataframe objects which
         contain the location-infos and distances.
