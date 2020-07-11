@@ -60,20 +60,24 @@ class visualize_graph:
         # Save interactive graph as html:
         fname = "utils/tmp/graph.html"
         realpath = os.path.realpath(fname)
-        self.fig.write_html(realpath)
+        self.fig.write_html(realpath,
+                            animation_opts={"frame": {"duration": 20}},
+                            auto_play=False)
 
         print("...Opening interactive graph in browser. If browser does not show the map correctly, try opening the "
               "saved HTML-file ({n}) manually.".format(n=realpath))
 
     def _setup_frames(self,
                       color_countries: int,
-                      color_lines: str) -> Tuple[List[go.Frame], list, list]:
-        # Create frames for visualization: ----------------------------------------
+                      color_lines: str) -> Tuple[List[go.Frame], list, list, dict]:
+
+
+        # Create frames for visualization:
         frames = list()
         self.all_sequences.append(self.best_sequence)
         self.all_dists.append(self.best_dist)
 
-        for i in range(len(self.all_sequences)):
+        for i in range(0,len(self.all_sequences),1):
             seq = self.all_sequences[i]
             # Calculate color for current frame:
             color = int(color_countries + i / len(self.all_sequences) * (255.0 - color_countries))
@@ -95,10 +99,22 @@ class visualize_graph:
                                   color=color_lines),
                         opacity=0.8
                     )],
+                    name=str(i),
                     layout=go.Layout(
                         geo=dict(
                             landcolor='rgb({p},{p},{p})'.format(p=color)
-                        )
+                        ),
+                        annotations=[
+                            go.layout.Annotation(
+                                text="Step {i}".format(i=i),
+                                align='left',
+                                showarrow=False,
+                                xref='paper',
+                                yref='paper',
+                                x=0.5,
+                                y=-0.04,
+                                bordercolor='black',
+                                borderwidth=0)]
                     )
                 )
             )
@@ -109,37 +125,99 @@ class visualize_graph:
                       lon_vals: list,
                       lat_vals: list,
                       color_germany: str):
-        # Set up plotly Figure: -----------------------------------------------------
+        
+        # Set up plotly Figure:
         self.fig = go.Figure(
             data=[
                 go.Scattergeo(
                     locationmode='USA-states', mode="lines",
                     lon=np.append(lon_vals[0], lon_vals[0]),
                     lat=np.append(lat_vals[0], lat_vals[0]),
-                    # line=dict(width=1, color='rgb(250,0,0)'), opacity=0.1,
-                    hoverinfo='none', name="teamname"
+                    hoverinfo='none', name="name"
                 )
             ],
             layout=go.Layout(
                 title="Start Title",
                 updatemenus=[dict(
                     type="buttons",
-                    buttons=[dict(
-                        label="Play",
+                    buttons=[
+                        dict(
+                        label="Play (Speed: x1)",
                         method="animate",
-                        args=[None, {"frame": {"duration": 20}}]
-                    )])]
+                        args=[None, {"frame": {"duration": 20},
+                                     "fromcurrent": True,
+                                     "mode": "immediate"}]
+                        ),
+                        dict(
+                            label="Play (Speed: x1/2)",
+                            method="animate",
+                            args=[None, {"frame": {"duration": 150},
+                                         "fromcurrent": True,
+                                         "mode": "immediate"}]
+                        ),
+                        dict(
+                            label="Pause",
+                            method="animate",
+                            args=[[None], {"mode": "immediate"}]
+                        ),
+                        dict(
+                            label="Reset",
+                            method="animate",
+                            args=[None, {"frame": {"duration": 99999999},
+                                          "mode": "immediate"}]
+                        ),
+                        dict(
+                            label="Result",
+                            method="animate",
+                            args=[[str(len(self.all_sequences)-1)], {"frame": {"duration": 99999999},
+                                         "mode": "immediate"}]
+                        )
+                        
+                    ],
+                    direction="down",
+                    pad={"r": 10, "t": 10},
+                    showactive=False,
+                    x=0.13,
+                    xanchor="left",
+                    y=1,
+                    yanchor="top"
+
+                ),
+                    dict(
+                        type="buttons",
+                        buttons=[
+                            dict(
+                                args=["text", [self.dataframe["msg Standort"]]],
+                                label="City Names: On",
+                                method="restyle"
+                            ),
+                            dict(
+                                args=["text", ""],
+                                label="City Names: Off",
+                                method="restyle"
+                            )
+                        ],
+                        direction="down",
+                        pad={"r": 10, "t": 10},
+                        showactive=False,
+                        x=0.13,
+                        xanchor="left",
+                        y=0.68,
+                        yanchor="top"
+    
+                    )
+                ]
             ),
             frames=frames
         )
 
 
-        # Coloring Germany red: ----------------------------------------------------------
+        # Coloring Germany red:
         self.fig.add_trace(go.Choropleth(
-            locations=["Germany"],  # Spatial coordinates
-            z=[0.0],  # Data to be color-coded
+            locations=["Germany"],
+            z=[0.0],
             locationmode='country names',  # set of locations match entries in `locations`
-            colorscale=[[0.0, color_germany], [0.5, color_germany], [1.0, color_germany]],  # old: "rgb(188,44,0)"
+            colorscale=[[0.0, color_germany], [0.5, color_germany], [1.0, color_germany]],
             showscale=False,
             autocolorscale=False
         ))
@@ -149,7 +227,7 @@ class visualize_graph:
     def _setup_cities(self,
                       locationmode: str,
                       color_cities: str):
-        # Adding Cities:------------------------------------
+        # Adding Cities:
         self.fig.add_trace(go.Scattergeo(
             locationmode=locationmode,
             lon=self.dataframe["Längengrad"].tolist(),
@@ -169,18 +247,17 @@ class visualize_graph:
 
                 line=dict(
                     width=1,
-                    color='White'
+                    color='rgb(216,99,126)'
                 )
             ))
         )
 
     def _setup_layout(self,
                       color_countries: int):
-        # Updating Figure Layout: ---------------------------------------------------------
+        # Updating Figure Layout:
         self.fig.update_layout(
-            title_text='[PRESS PLAY] .msg Coding Challenge: \n'
-                       'Iterating through the Search Algorithm Output for finding the shortest '
-                       'route around all msg locations in Germany.\n',
+            title_text='.msg Coding Challenge: \n'
+                       'Iterating through the Search Algorithm Output.\n',
             showlegend=False,
             hovermode=False,
             geo=dict(
