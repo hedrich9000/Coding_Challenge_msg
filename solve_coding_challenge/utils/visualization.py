@@ -111,8 +111,8 @@ class visualize_graph:
                                 showarrow=False,
                                 xref='paper',
                                 yref='paper',
-                                x=0.5,
-                                y=-0.04,
+                                x=0,
+                                y=0,
                                 bordercolor='black',
                                 borderwidth=0)]
                     )
@@ -174,14 +174,13 @@ class visualize_graph:
                         )
                         
                     ],
-                    direction="down",
+                    direction="right",
                     pad={"r": 10, "t": 10},
                     showactive=False,
-                    x=0.13,
+                    x=0,
                     xanchor="left",
-                    y=1,
+                    y=0,
                     yanchor="top"
-
                 ),
                     dict(
                         type="buttons",
@@ -197,14 +196,13 @@ class visualize_graph:
                                 method="restyle"
                             )
                         ],
-                        direction="down",
+                        direction="left",
                         pad={"r": 10, "t": 10},
                         showactive=False,
-                        x=0.13,
-                        xanchor="left",
-                        y=0.68,
+                        x=1,
+                        xanchor="right",
+                        y=0,
                         yanchor="top"
-    
                     )
                 ]
             ),
