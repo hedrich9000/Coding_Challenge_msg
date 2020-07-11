@@ -47,7 +47,9 @@ Beispielanwendung in der Kommandozeile, falls eine individuelle CSV-Datei gelade
 ```script
 $ python main.py -l /path/to/file/file.csv -i 20 -s 0.001 -m -g
 ```
-
+Hier kann individuell eine eigene CSV-Datei eingegeben werden (**[-l]**), die Anzahl der Iterationen mit zufälliger
+Startroute gesetzt werden (**[-i]**) und der Score zur ausreichenden Optimierung angepasst werden (**[-s]**). Die
+CSV-Datei muss dabei im gleichen Format wie die Vorlage gegeben sein.
 ## Berechnung der Distanzen
 Die Distanz zwischen den Städten wurde mittels der Geokoordinaten als Kreisbogen über 
 die Erdkugel berechnet. Somit entspricht die Distanz der "Luftlinie" zwischen den Orten.
