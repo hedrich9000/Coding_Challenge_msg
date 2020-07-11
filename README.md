@@ -2,7 +2,7 @@
 
 ![Graph](solve_coding_challenge/docs/graph.gif) |
 :----:
-Graph showing the algorithm steps for the best solution |
+Animierte Grafik, welche die Schritte des Algorithmus zur Lösung des Problems darstellt ([Interaktive Version](https://msg-coding-solution-graph.site44.com/)) |
 
 ## Ausführung des Codes
 Getestet mit Python in einer Virtual Environment mit:
@@ -43,7 +43,7 @@ optional arguments:
   -m, --vis_map         [OPTIONAL] Enable visualization of the cities on a map using your webbrowser. (default: False)
   -g, --vis_graph       [OPTIONAL] Enable visualization of the algorithm steps as a graph using your webbrowser. (default: False)
 ```
-Beispielanwendung in der Kommandozeile:
+Beispielanwendung in der Kommandozeile, falls eine individuelle CSV-Datei geladen werden soll:
 ```script
 $ python main.py -l /path/to/file/file.csv -i 20 -s 0.001 -m -g
 ```
@@ -59,6 +59,19 @@ Zeitaufwand und der Minimierung der Gesamtdistanz darstellt.
 
 
 ## Lösung/Ergebnisse
+
+Die Lösung wird im Folgenden sowohl als Auflistung der Städte als auch als Visualisierung der Städte 
+anhand eines interaktiven Graphen sowie einer interaktiven Karte gezeigt.
+
+Zum Öffnen der Visualisierungen stehen folgende Links zur Verfügung:
+* [Interaktiver Graph](https://msg-coding-solution-graph.site44.com/)
+* [Interaktive Karte](https://msg-coding-solution-map.site44.com/)
+
+Diese Visualisierungen lassen sich mittels der tags **[-m]** und **[-g]** von *main.py* generieren.
+Dabei sollte sich beim Ausführen der Funktion automatisch der Default Browser öffnen und 
+die Visualierungen in zwei neuen Tabs anzeigen. Die Ergebnisse in Textform werden im Folgenden gezeigt.
+
+
 
 ### Geringste gefundene Distanz
 Die geringste gefundene Distanz in Kilometern beträgt:
@@ -96,6 +109,6 @@ Ismaning/München (Hauptsitz)
 ### Ergebnisse auf der Karte
 ![Map showing the resulting route to cities](solve_coding_challenge/docs/result_map.png) |
 :----:
-Die gezeigte Karte kann mittels dieser Datei ([Link](solve_coding_challenge/docs/map.html)) im Browser angezeigt werden. Zur korrekten Darstellung sollte die Datei zuvor runtergeladen und mit dem Browser geöffnet werden. |
+Lösung des Problems dargestellt auf einer Landkarte ([Interaktive Version](https://msg-coding-solution-map.site44.com/)) |
 
 
