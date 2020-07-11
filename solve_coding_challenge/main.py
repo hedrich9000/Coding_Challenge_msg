@@ -14,7 +14,7 @@ def get_args():
     """
     parser = argparse.ArgumentParser(description='Import CSV-File and get a solution for the TSP problem.\n'
                                                  'If nothing is set, the program will set the csv-path to '
-                                                 '"msg_standorte_deutschland.csv" and the iterations to 5.',
+                                                 '"msg_standorte_deutschland.csv" and the iterations to 10.',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-l', '--load', dest='load', type=str, default=False,
                         help='Load CSV-File in the stated form')
